@@ -35,7 +35,7 @@ CONTAINER_MEMORY_IN_BYTES=`cat /sys/fs/cgroup/memory/memory.limit_in_bytes`
 DEFAULT_MEMORY_CEILING=$((2**40-1))
 
 if [ -z $MAX_METASPACE_SIZE ]; then
-    MAX_METASPACE_SIZE=100m
+    MAX_METASPACE_SIZE=200m
 fi
 
 if [ "${CONTAINER_MEMORY_IN_BYTES}" -lt "${DEFAULT_MEMORY_CEILING}" ]; then
