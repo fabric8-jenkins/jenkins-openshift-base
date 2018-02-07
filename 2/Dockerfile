@@ -65,6 +65,12 @@ ENV NODE_VERSION 8.7.0
 RUN wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
 RUN tar --strip-components 1 -xzvf node-v* -C /usr/local
 
+# Setup zabbix_sender for monitoring
+# Installation commands from  https://www.zabbix.com/download?zabbix=3.4&os_distribution=centos&os_version=7&db=MySQL
+RUN rpm -i http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-2.el7.noarch.rpm && \
+    yum install -y zabbix-sender && \
+    yum clean all
+
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin
 ADD ./contrib/s2i /usr/libexec/s2i
