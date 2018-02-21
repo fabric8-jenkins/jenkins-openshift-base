@@ -60,9 +60,9 @@ ENV M2 $M2_HOME/bin
 ENV PATH $M2:$PATH
 
 # nodejs
-ENV NODE_VERSION 8.7.0
-RUN wget http://nodejs.org/dist/v0.10.30/node-v0.10.30-linux-x64.tar.gz
-RUN tar --strip-components 1 -xzvf node-v* -C /usr/local
+ENV NODE_VERSION 8.9.4
+RUN wget https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz && \
+    tar --strip-components 1 -xvf node-v* -C /usr/local
 
 # Setup zabbix_sender for monitoring
 # Installation commands from  https://www.zabbix.com/download?zabbix=3.4&os_distribution=centos&os_version=7&db=MySQL
