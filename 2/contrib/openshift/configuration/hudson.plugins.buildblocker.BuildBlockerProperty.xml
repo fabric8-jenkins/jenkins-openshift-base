@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.buildblocker.BuildBlockerProperty_-DescriptorImpl plugin="build-blocker-plugin@1.7.4-SNAPSHOT">
+  <useBuildBlocker>true</useBuildBlocker>
+  <blockLevel>GLOBAL</blockLevel>
+  <scanQueueFor>DISABLED</scanQueueFor>
+  <blockingJobs>.*</blockingJobs>
+</hudson.plugins.buildblocker.BuildBlockerProperty_-DescriptorImpl>
