@@ -8,7 +8,6 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
   <conditions>
     <hudson.plugins.promoted__builds.conditions.SelfPromotionCondition>
       <evenIfUnstable>false</evenIfUnstable>

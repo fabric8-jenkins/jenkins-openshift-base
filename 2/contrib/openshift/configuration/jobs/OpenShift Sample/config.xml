@@ -9,7 +9,6 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
-  <concurrentBuild>false</concurrentBuild>
   <builders>
 
     <com.openshift.jenkins.plugins.pipeline.OpenShiftScaler>
