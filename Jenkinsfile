@@ -1,4 +1,5 @@
 #!/usr/bin/groovy
+// See scripts in .cico/ directory as this will be moved soon,
 @Library('github.com/fabric8io/fabric8-pipeline-library@master')
 def name = 'jenkins-openshift-base'
 def org = 'fabric8io'
