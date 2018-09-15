@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM openshift/origin
 
 MAINTAINER Ben Parees <bparees@redhat.com>
 
@@ -7,10 +7,12 @@ ENV HOME=/home/jenkins
 USER root
 # Install headless Java
 RUN yum install -y centos-release-scl-rh && \
-    INSTALL_PKGS="bc gettext git java-1.8.0-openjdk-headless java-1.8.0-openjdk-headless.i686 lsof rsync tar unzip which zip" && \
-    yum install -y --setopt=tsflags=nodocs install $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    yum -y install centos-release-openshift-origin && yum -y install origin-clients && \
+    x86_EXTRA_RPMS=$(if [ "$(uname -m)" == "x86_64" ]; then echo -n java-1.8.0-openjdk-headless.i686 ; fi) && \
+    INSTALL_PKGS="bc gettext git java-1.8.0-openjdk-headless lsof rsync tar unzip which zip bzip2" && \
+    yum install -y --setopt=tsflags=nodocs install $INSTALL_PKGS $x86_EXTRA_RPMS && \
+    # have temporarily removed the validation for java to work around known problem fixed in fedora; jupierce and gmontero are working with
+    # the requisit folks to get that addressed ... will switch back to rpm -V $INSTALL_PKGS when that occurs
+    rpm -V bc gettext git lsof rsync tar unzip which zip bzip2  && \
     yum clean all && \
     mkdir -p /home/jenkins && \
     chown -R 1001:0 /home/jenkins && \
@@ -22,6 +24,7 @@ RUN yum install -y centos-release-scl-rh && \
     chmod 775 /usr/bin && \
     chmod 775 /usr/lib/jvm-exports && \
     chmod 775 /usr/share/man/man1 && \
+    chmod 775 /var/lib/origin && \
     unlink /usr/bin/java && \
     unlink /usr/bin/jjs && \
     unlink /usr/bin/keytool && \
