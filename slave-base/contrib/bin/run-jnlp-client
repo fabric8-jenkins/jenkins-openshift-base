@@ -12,25 +12,24 @@
 
 validateConnection() {
   i=1
-  echo "INFO: $(date +%T)[$i]: Checking connection to $F8_JENKINS_URL"
-  until curl -L --max-time $INTERVAL --connect-timeout $INTERVAL "$F8_JENKINS_URL"; do
+  echo "INFO: $(date +%T)[$i]: Checking connection to $JENKINS_URL"
+  until curl -L --max-time $INTERVAL --connect-timeout $INTERVAL "$JENKINS_URL"; do
     ((++i))
     if [[ $i -ge $MAX_RETRIES ]]; then
       echo "ERROR: $(date +%T)[$i]: Failed to connected after $MAX_RETRIES; aborting"
       exit 1
     fi
 
-    echo "INFO: $(date +%T)[$i]: Retry connecting to $F8_JENKINS_URL"
+    echo "INFO: $(date +%T)[$i]: Retry connecting to $JENKINS_URL"
     sleep $INTERVAL
   done
 
-  echo "INFO: $(date +%T): Successfully connected to $F8_JENKINS_URL"
+  echo "INFO: $(date +%T): Successfully connected to $JENKINS_URL"
   return $?
 }
 
 MAX_RETRIES=${MAX_RETRIES:-5}
 INTERVAL=${INTERVAL:-1}
-F8_JENKINS_URL="${F8_JENKINS_URL:-jenkins}"
 
 validateConnection
 
