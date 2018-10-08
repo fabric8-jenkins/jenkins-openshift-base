@@ -8,7 +8,31 @@
 # The directory has to be writeable for the user that the container is running
 # under.
 
-#NOTE:  periodically check https://ce-gitlab.usersys.redhat.com/ce/jboss-dockerfiles/blob/develop/scripts/os-java-run/added/java-default-options for updates
+# NOTE:  periodically check https://ce-gitlab.usersys.redhat.com/ce/jboss-dockerfiles/blob/develop/scripts/os-java-run/added/java-default-options for updates
+
+validateConnection() {
+  i=1
+  echo "INFO: $(date +%T)[$i]: Checking connection to $JENKINS_HOSTNAME"
+  until curl -L --max-time $INTERVAL --connect-timeout $INTERVAL "$JENKINS_HOSTNAME"; do
+    ((++i))
+    if [[ $i -ge $MAX_RETRIES ]]; then
+      echo "ERROR: $(date +%T)[$i]: Failed to connected after $MAX_RETRIES; aborting"
+      exit 1
+    fi
+
+    echo "INFO: $(date +%T)[$i]: Retry connecting to $JENKINS_HOSTNAME"
+    sleep $INTERVAL
+  done
+
+  echo "INFO: $(date +%T): Successfully connected to $JENKINS_HOSTNAME"
+  return $?
+}
+
+MAX_RETRIES=${MAX_RETRIES:-5}
+INTERVAL=${INTERVAL:-1}
+JENKINS_HOSTNAME="${JENKINS_HOSTNAME:-jenkins}"
+
+validateConnection
 
 export JENKINS_HOME=/home/jenkins
 
@@ -17,7 +41,7 @@ export HOME=${JENKINS_HOME}
 
 source /usr/local/bin/generate_container_user
 
-#get the fully qualified paths to both 32 and 64 bit java
+# get the fully qualified paths to both 32 and 64 bit java
 JVMPath32bit=`alternatives --display java | grep family | grep i386 | awk '{print $1}'`
 JVMPath64bit=`alternatives --display java | grep family | grep x86_64 | awk '{print $1}'`
 
