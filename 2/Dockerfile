@@ -13,7 +13,7 @@ FROM centos:centos7
 MAINTAINER Ben Parees <bparees@redhat.com>
 
 # Get newer unstable Jenkins from https://pkg.jenkins.io/redhat
-ENV JENKINS_VERSION=2.138.2-1.1 \
+ENV JENKINS_VERSION=2.150.2-1.1 \
     HOME=/var/lib/jenkins \
     JENKINS_HOME=/var/lib/jenkins \
     JENKINS_UC=https://updates.jenkins-ci.org
